@@ -182,3 +182,98 @@ def game_dict():
             ]
         }
     }
+
+def num_points_per_game(player_name):
+    #Get all players (both home and away)
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    
+    #Loop to find the player
+    found_player = [player for player in players if player['name'] == player_name]
+    
+    #If the player is found, return the number of points per game
+    if found_player:
+        return found_player[0]['points_per_game']
+    else:
+        return "No player found."
+
+def player_age(player_name):
+    #Get all players (both home and away)
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    
+    #Loop to find the player
+    found_player = [player for player in players if player['name'] == player_name]
+    
+    #If the player is found, return their age
+    if found_player:
+        return found_player[0]['age']
+    else:
+        return "No player found"
+
+def team_colors(team_name):
+    #Make a list of both home and away teams
+    teams = [game_dict()['home'], game_dict()['away']]
+    
+    #Loop over the teams to find the desired team
+    found_team = [team for team in teams if team['team_name'] == team_name]
+    
+    #If found, return the team colors
+    if (found_team):
+        return found_team[0]['colors']
+    else:
+        return "No team found"
+
+def team_names():
+    #Make a list of both home and away teams
+    teams = [game_dict()['home'], game_dict()['away']]
+    
+    #Return a list of the team names
+    return [team['team_name'] for team in teams]
+
+def player_numbers(team_name):
+    #Make a list of both home and away teams
+    teams = [game_dict()['home'], game_dict()['away']]
+    
+    #Loop over the teams to find the desired team
+    found_team = [team for team in teams if team['team_name'] == team_name]
+    
+    if(not found_team):
+        return "No team found."
+    
+    players = found_team[0]['players']
+    
+    #Loop over the players and return their jersey numbers as a list
+    return [player['number'] for player in players]
+
+def player_stats(player_name):
+    #Create a list that has both home and away players
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    
+    #Loop over the list to find the player
+    found_player = [player for player in players if player['name'] == player_name]
+    
+    #Return the player stats
+    if (found_player):
+        return found_player[0]
+    else:
+        return "No player found."
+
+def average_rebounds_by_shoe_brand():
+    #Get the players from both the home and away side
+    players = game_dict()['home']['players'] + game_dict()['away']['players']
+    
+    #Initialize the brand dictionary
+    brand_rebounds = {
+        "Nike":[],
+        "Adidas":[],
+        "Puma":[],
+        "Jordan":[]
+    }
+    
+    #Loop over the players list and populate the brand dictionary according to the player shoe brand
+    for player in players:
+        brand_rebounds.get(player['shoe_brand']).append(player['rebounds_per_game'])
+        
+    #Loop over the brand dictionary and print the average
+    for key, value in brand_rebounds.items():
+        average = sum(value) / len(value)
+        print(f"{key}:  {average:.2f}")
